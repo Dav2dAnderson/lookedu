@@ -1,0 +1,118 @@
+####################################
+# Python
+####################################
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+####################################
+# Virtual environments
+####################################
+venv/
+env/
+.venv/
+virtualenv/
+ENV/
+env.bak/
+venv.bak/
+
+####################################
+# Django
+####################################
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+media/
+staticfiles/
+
+####################################
+# Django migrations (ixtiyoriy)
+####################################
+# Agar migrationlarni gitga qo‘shmoqchi bo‘lsangiz, o‘chiring
+**/migrations/*.py
+!**/migrations/__init__.py
+
+####################################
+# Environment variables
+####################################
+.env
+.env.*
+!.env.example
+
+####################################
+# Unit test / coverage
+####################################
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+pytest_cache/
+.cache/
+
+####################################
+# Build / distribution
+####################################
+build/
+dist/
+develop-eggs/
+eggs/
+*.egg-info/
+.installed.cfg
+lib/
+lib64/
+
+####################################
+# IDE / Editor
+####################################
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*.bak
+*.tmp
+
+####################################
+# Jupyter
+####################################
+.ipynb_checkpoints
+
+####################################
+# OS files
+####################################
+.DS_Store
+.DS_Store?
+Thumbs.db
+desktop.ini
+
+####################################
+# Node (agar frontend bo‘lsa)
+####################################
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+####################################
+# Logs
+####################################
+logs/
+*.log
+
+####################################
+# Docker
+####################################
+*.pid
+docker-compose.override.yml
+
+####################################
+# Celery / Redis
+####################################
+celerybeat-schedule
+celerybeat.pid
