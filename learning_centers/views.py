@@ -1,9 +1,11 @@
 from django.shortcuts import render
 
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 
-from .models import Educenters
-from .serializers import CentersListSerializer, CentersRetrieveSerializer
+from .models import Educenters, Application, Courses
+from .serializers import CentersListSerializer, CentersRetrieveSerializer, ApplicationsSerializer, CoursesSerializer
+from .permissions import IsOwnerOrAdmin
+
 # Create your views here.
 
 
@@ -18,3 +20,29 @@ class CentersView(viewsets.ModelViewSet):
             return CentersRetrieveSerializer
         return CentersRetrieveSerializer
     
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            permission_classes = [permissions.IsAuthenticated]
+        else:
+            permission_classes = [permissions.IsAdminUser]
+        return [permission() for permission in permission_classes]
+    
+
+class ApplicationsView(viewsets.ModelViewSet):
+    queryset = Application.objects.all()
+    serializer_class = ApplicationsSerializer
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrAdmin]
+    lookup_field = 'index'
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+    def get_queryset(self):
+        return self.request.user.applies.all()
+    
+
+class CoursesView(viewsets.ModelViewSet):
+    queryset = Courses.objects.all()
+    serializer_class = CoursesSerializer
+    permission_classes = [permissions.IsAdminUser]
+    lookup_field = 'slug'

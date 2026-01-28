@@ -1,6 +1,10 @@
 from rest_framework import serializers
 
-from .models import Educenters, Courses
+from .models import Educenters, Courses, Application
+
+from users_control.serializers import UserShortSerializer
+from users_control.models import CustomUser
+
 
 
 class CoursesSerializer(serializers.ModelSerializer):
@@ -12,7 +16,7 @@ class CoursesSerializer(serializers.ModelSerializer):
 class CentersListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Educenters
-        fields = ['name', 'slug']
+        fields = ['id', 'name', 'slug']
 
 
 class CentersRetrieveSerializer(serializers.ModelSerializer):
@@ -27,8 +31,28 @@ class CentersRetrieveSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Educenters
-        fields = ['name', 'bio', 'phone_number', 'phone_number_extra', 'courses', 'course_ids']
+        fields = ['name', 'info', 'phone_number', 'phone_number_extra', 'courses', 'course_ids']
 
 
+class ApplicationsSerializer(serializers.ModelSerializer):
+    owner = UserShortSerializer(read_only=True)
+    center = CentersRetrieveSerializer(read_only=True)
+    course = CoursesSerializer(read_only=True)
+
+    center_id = serializers.PrimaryKeyRelatedField(
+        source='center',
+        queryset=Educenters.objects.all(),
+        write_only=True
+    )
+
+    course_id = serializers.PrimaryKeyRelatedField(
+        source='course',
+        queryset=Courses.objects.all(),
+        write_only=True
+    )
+
+    class Meta:
+        model = Application
+        fields = ['owner', 'center', 'course', 'index', 'center_id', 'course_id']
 
         

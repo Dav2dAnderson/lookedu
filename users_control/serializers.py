@@ -49,3 +49,9 @@ class UserLogOutSerializer(serializers.Serializer):
     def save(self, **kwargs):
         token = RefreshToken(self.validated_data["refresh"])
         token.blacklist()
+
+
+class UserShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'phone_number')

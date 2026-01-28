@@ -25,7 +25,6 @@ class UserRegistrationView(APIView):
         )
 
 
-
 class UserLogOutView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -34,5 +33,6 @@ class UserLogOutView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({"detail": "Logged out"}, status=status.HTTP_205_RESET_CONTENT)
+
 
 
