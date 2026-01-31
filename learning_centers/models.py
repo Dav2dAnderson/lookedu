@@ -27,6 +27,9 @@ class Courses(models.Model):
 
 """ Education centers """
 class Educenters(models.Model):
+    picture = models.ImageField(upload_to="educenter_images/", null=True, blank=True)
+    official_website = models.URLField(null=True, blank=True)
+    cost = models.PositiveIntegerField(null=True, blank=True)
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=120, null=True, blank=True, unique=True)
     courses = models.ManyToManyField(Courses, related_name='educenters', blank=True)

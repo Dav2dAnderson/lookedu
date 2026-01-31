@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from django.urls import reverse
+
 from .models import Educenters, Courses, Application
 
 from users_control.serializers import UserShortSerializer
@@ -14,9 +16,17 @@ class CoursesSerializer(serializers.ModelSerializer):
 
 
 class CentersListSerializer(serializers.ModelSerializer):
+    detail_url = serializers.SerializerMethodField()
+
     class Meta:
         model = Educenters
-        fields = ['id', 'name', 'slug']
+        fields = ['id', 'name', 'slug', 'info', 'phone_number', 'picture', 'detail_url']
+
+    def get_detail_url(self, obj):
+        request = self.context.get('request')
+
+        url = reverse("educenters-detail", kwargs={'slug': obj.slug})
+        return request.build_absolute_uri(url) if request else url
 
 
 class CentersRetrieveSerializer(serializers.ModelSerializer):
@@ -31,7 +41,9 @@ class CentersRetrieveSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Educenters
-        fields = ['name', 'info', 'phone_number', 'phone_number_extra', 'courses', 'course_ids']
+        fields = ['name', 'info', 'phone_number', 
+                  'phone_number_extra', 'courses', 'cost', 
+                  'official_website', 'picture', 'course_ids']
 
 
 class ApplicationsSerializer(serializers.ModelSerializer):
@@ -53,6 +65,6 @@ class ApplicationsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Application
-        fields = ['owner', 'center', 'course', 'index', 'center_id', 'course_id']
+        fields = ['id', 'owner', 'center', 'course', 'content', 'index', 'center_id', 'course_id']
 
         

@@ -7,7 +7,7 @@ from .views import CentersView, ApplicationsView, CoursesView
 routers = DefaultRouter()
 
 routers.register('educenters', CentersView, basename='educenters')
-routers.register('applications', ApplicationsView, basename='applications')
+routers.register('my-applications', ApplicationsView, basename='applications')
 routers.register('courses', CoursesView, basename='courses')
 
 urlpatterns = [
