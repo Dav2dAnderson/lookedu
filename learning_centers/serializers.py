@@ -12,7 +12,8 @@ from users_control.models import CustomUser
 class CoursesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Courses
-        fields = ['title', 'slug']
+        fields = ['id', 'title', 'slug']
+
 
 
 class CentersListSerializer(serializers.ModelSerializer):
@@ -20,7 +21,7 @@ class CentersListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Educenters
-        fields = ['id', 'name', 'slug', 'info', 'phone_number', 'picture', 'detail_url']
+        fields = ['id', 'name', 'slug', 'info', 'phone_number', 'picture', 'cost', 'detail_url']
 
     def get_detail_url(self, obj):
         request = self.context.get('request')
@@ -41,9 +42,10 @@ class CentersRetrieveSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Educenters
-        fields = ['name', 'info', 'phone_number', 
+        fields = ['id', 'name', 'info', 'phone_number', 
                   'phone_number_extra', 'courses', 'cost', 
                   'official_website', 'picture', 'course_ids']
+
 
 
 class ApplicationsSerializer(serializers.ModelSerializer):
@@ -65,6 +67,6 @@ class ApplicationsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Application
-        fields = ['id', 'owner', 'center', 'course', 'content', 'index', 'center_id', 'course_id']
+        fields = ['id', 'owner', 'center', 'course', 'content', 'index', 'center_id', 'course_id', 'created_date']
 
         

@@ -1,0 +1,764 @@
+openapi: 3.0.3
+info:
+  title: lookedu API
+  version: 1.0.0
+  description: API for my starup project
+paths:
+  /api/courses/:
+    get:
+      operationId: api_courses_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Courses'
+          description: ''
+    post:
+      operationId: api_courses_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Courses'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Courses'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Courses'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Courses'
+          description: ''
+  /api/courses/{slug}/:
+    get:
+      operationId: api_courses_retrieve
+      parameters:
+      - in: path
+        name: slug
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Courses'
+          description: ''
+    put:
+      operationId: api_courses_update
+      parameters:
+      - in: path
+        name: slug
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Courses'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Courses'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Courses'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Courses'
+          description: ''
+    patch:
+      operationId: api_courses_partial_update
+      parameters:
+      - in: path
+        name: slug
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCourses'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCourses'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCourses'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Courses'
+          description: ''
+    delete:
+      operationId: api_courses_destroy
+      parameters:
+      - in: path
+        name: slug
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/educenters/:
+    get:
+      operationId: api_educenters_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CentersList'
+          description: ''
+    post:
+      operationId: api_educenters_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CentersRetrieve'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CentersRetrieve'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CentersRetrieve'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CentersRetrieve'
+          description: ''
+  /api/educenters/{slug}/:
+    get:
+      operationId: api_educenters_retrieve
+      parameters:
+      - in: path
+        name: slug
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CentersRetrieve'
+          description: ''
+    put:
+      operationId: api_educenters_update
+      parameters:
+      - in: path
+        name: slug
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CentersRetrieve'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CentersRetrieve'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CentersRetrieve'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CentersRetrieve'
+          description: ''
+    patch:
+      operationId: api_educenters_partial_update
+      parameters:
+      - in: path
+        name: slug
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCentersRetrieve'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCentersRetrieve'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCentersRetrieve'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CentersRetrieve'
+          description: ''
+    delete:
+      operationId: api_educenters_destroy
+      parameters:
+      - in: path
+        name: slug
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/my-applications/:
+    get:
+      operationId: api_my_applications_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Applications'
+          description: ''
+    post:
+      operationId: api_my_applications_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Applications'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Applications'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Applications'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Applications'
+          description: ''
+  /api/my-applications/{index}/:
+    get:
+      operationId: api_my_applications_retrieve
+      parameters:
+      - in: path
+        name: index
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Applications'
+          description: ''
+    put:
+      operationId: api_my_applications_update
+      parameters:
+      - in: path
+        name: index
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Applications'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Applications'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Applications'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Applications'
+          description: ''
+    patch:
+      operationId: api_my_applications_partial_update
+      parameters:
+      - in: path
+        name: index
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedApplications'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedApplications'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedApplications'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Applications'
+          description: ''
+    delete:
+      operationId: api_my_applications_destroy
+      parameters:
+      - in: path
+        name: index
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/token/:
+    post:
+      operationId: api_token_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObtainPair'
+          description: ''
+  /api/token/refresh/:
+    post:
+      operationId: api_token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /user/logout/:
+    post:
+      operationId: user_logout_create
+      tags:
+      - user
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /user/register/:
+    post:
+      operationId: user_register_create
+      tags:
+      - user
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+components:
+  schemas:
+    Applications:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        owner:
+          allOf:
+          - $ref: '#/components/schemas/UserShort'
+          readOnly: true
+        center:
+          allOf:
+          - $ref: '#/components/schemas/CentersRetrieve'
+          readOnly: true
+        course:
+          allOf:
+          - $ref: '#/components/schemas/Courses'
+          readOnly: true
+        content:
+          type: string
+          nullable: true
+        index:
+          type: integer
+          readOnly: true
+          nullable: true
+        center_id:
+          type: integer
+          writeOnly: true
+        course_id:
+          type: integer
+          writeOnly: true
+      required:
+      - center
+      - center_id
+      - course
+      - course_id
+      - id
+      - index
+      - owner
+    CentersList:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        slug:
+          type: string
+          nullable: true
+          maxLength: 120
+          pattern: ^[-a-zA-Z0-9_]+$
+        info:
+          type: string
+          nullable: true
+        phone_number:
+          type: string
+          nullable: true
+          maxLength: 13
+        picture:
+          type: string
+          format: uri
+          nullable: true
+        detail_url:
+          type: string
+          readOnly: true
+      required:
+      - detail_url
+      - id
+      - name
+    CentersRetrieve:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        info:
+          type: string
+          nullable: true
+        phone_number:
+          type: string
+          nullable: true
+          maxLength: 13
+        phone_number_extra:
+          type: string
+          nullable: true
+          maxLength: 13
+        courses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Courses'
+          readOnly: true
+        cost:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          nullable: true
+        official_website:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        picture:
+          type: string
+          format: uri
+          nullable: true
+        course_ids:
+          type: array
+          items:
+            type: integer
+            writeOnly: true
+          writeOnly: true
+      required:
+      - course_ids
+      - courses
+      - name
+    Courses:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 100
+        slug:
+          type: string
+          nullable: true
+          maxLength: 120
+          pattern: ^[-a-zA-Z0-9_]+$
+      required:
+      - title
+    PatchedApplications:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        owner:
+          allOf:
+          - $ref: '#/components/schemas/UserShort'
+          readOnly: true
+        center:
+          allOf:
+          - $ref: '#/components/schemas/CentersRetrieve'
+          readOnly: true
+        course:
+          allOf:
+          - $ref: '#/components/schemas/Courses'
+          readOnly: true
+        content:
+          type: string
+          nullable: true
+        index:
+          type: integer
+          readOnly: true
+          nullable: true
+        center_id:
+          type: integer
+          writeOnly: true
+        course_id:
+          type: integer
+          writeOnly: true
+    PatchedCentersRetrieve:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        info:
+          type: string
+          nullable: true
+        phone_number:
+          type: string
+          nullable: true
+          maxLength: 13
+        phone_number_extra:
+          type: string
+          nullable: true
+          maxLength: 13
+        courses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Courses'
+          readOnly: true
+        cost:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          nullable: true
+        official_website:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        picture:
+          type: string
+          format: uri
+          nullable: true
+        course_ids:
+          type: array
+          items:
+            type: integer
+            writeOnly: true
+          writeOnly: true
+    PatchedCourses:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 100
+        slug:
+          type: string
+          nullable: true
+          maxLength: 120
+          pattern: ^[-a-zA-Z0-9_]+$
+    TokenObtainPair:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          readOnly: true
+      required:
+      - access
+      - password
+      - refresh
+      - username
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+      required:
+      - access
+      - refresh
+    UserShort:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        phone_number:
+          type: string
+          maxLength: 13
+      required:
+      - id
+      - phone_number
+      - username
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

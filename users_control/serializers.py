@@ -19,7 +19,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         if data['password'] != data['password_confirm']:
-            return serializers.ValidationError({"password_confirm": "Password fields didn't match."})
+            raise serializers.ValidationError({"password_confirm": "Password fields didn't match."})
         return data
     
     def create(self, validated_data):
@@ -54,4 +54,4 @@ class UserLogOutSerializer(serializers.Serializer):
 class UserShortSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'phone_number')
+        fields = ('username', 'first_name', 'last_name', 'phone_number', 'email')

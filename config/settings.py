@@ -49,12 +49,24 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
+
+    'drf_spectacular',
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'lookedu API',
+    'DESCRIPTION': 'API for my starup project',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
 }
 
 from datetime import timedelta
@@ -72,6 +84,7 @@ SIMPLE_JWT = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -152,3 +165,5 @@ MEDIA_ROOT =  BASE_DIR / 'media'
 
 
 AUTH_USER_MODEL = 'users_control.CustomUser'
+
+CORS_ALLOW_ALL_ORIGINS = True
