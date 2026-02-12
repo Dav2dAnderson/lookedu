@@ -30,7 +30,18 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "api.codylife.uz",
+    "codylife.uz",
+    "ec2-16-16-115-194.eu-north-1.compute.amazonaws.com",
+    "localhost",
+    "127.0.0.1"
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://frontend-nu-three-44.vercel.app",
+    "https://api.codylife.uz"
+]
 
 
 # Application definition
