@@ -28,8 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
+<<<<<<< HEAD
 ALLOWED_HOSTS = [
     "api.codylife.uz",
     "codylife.uz",
@@ -42,7 +43,14 @@ CSRF_TRUSTED_ORIGINS = [
     "https://frontend-nu-three-44.vercel.app",
     "https://api.codylife.uz"
 ]
+=======
+ALLOWED_HOSTS = ["api.codylife.uz", ".codylife.uz"]
+>>>>>>> 6c73ed1 (some bugs)
 
+CORS_ALLOWED_ORIGINS = ["https://codylife.uz", "https://www.codylife.uz", "https://codylife.vercel.app"]
+
+CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = ["https://codylife.uz", "https://www.codylife.uz", "https://codylife.vercel.app"]
 
 # Application definition
 
@@ -93,6 +101,7 @@ SIMPLE_JWT = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -169,7 +178,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT =  BASE_DIR / 'media'

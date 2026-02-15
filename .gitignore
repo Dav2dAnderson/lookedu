@@ -116,3 +116,4 @@ docker-compose.override.yml
 ####################################
 celerybeat-schedule
 celerybeat.pid
+myenv/
