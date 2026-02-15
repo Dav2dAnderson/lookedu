@@ -36,7 +36,21 @@ export default function RegisterPage() {
             toast.success('Account created successfully! Welcome to Lookedu.');
             router.push('/login');
         } catch (err: any) {
-            toast.error(err.response?.data?.username?.[0] || 'Registration failed. Try a different username.');
+            console.error('Registration error:', err);
+            const errorData = err.response?.data;
+            if (errorData && typeof errorData === 'object') {
+                // Iterate through all fields and show their errors
+                Object.keys(errorData).forEach((field) => {
+                    const messages = errorData[field];
+                    if (Array.isArray(messages)) {
+                        messages.forEach((msg) => toast.error(`${field}: ${msg}`));
+                    } else {
+                        toast.error(`${field}: ${messages}`);
+                    }
+                });
+            } else {
+                toast.error('Registration failed. Please check your connection and try again.');
+            }
         } finally {
             setIsLoading(false);
         }
