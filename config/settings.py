@@ -35,11 +35,20 @@ ALLOWED_HOSTS = [
     "codylife.uz",
     "ec2-16-16-115-194.eu-north-1.compute.amazonaws.com",
     "localhost",
-    "127.0.0.1"
+    "127.0.0.1",
+    "frontend-nu-three-44.vercel.app"
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "https://frontend-nu-three-44.vercel.app",
+    "https://codylife.uz",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://frontend-nu-three-44.vercel.app",
+    "https://codylife.uz",
     "https://api.codylife.uz"
 ]
 
