@@ -30,7 +30,6 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-<<<<<<< HEAD
 ALLOWED_HOSTS = [
     "api.codylife.uz",
     "codylife.uz",
@@ -43,9 +42,6 @@ CSRF_TRUSTED_ORIGINS = [
     "https://frontend-nu-three-44.vercel.app",
     "https://api.codylife.uz"
 ]
-=======
-ALLOWED_HOSTS = ["api.codylife.uz", ".codylife.uz"]
->>>>>>> 6c73ed1 (some bugs)
 
 CORS_ALLOWED_ORIGINS = ["https://codylife.uz", "https://www.codylife.uz", "https://codylife.vercel.app"]
 
