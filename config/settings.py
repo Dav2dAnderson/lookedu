@@ -28,34 +28,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = [
-    "api.codylife.uz",
-    "codylife.uz",
-    "ec2-16-16-115-194.eu-north-1.compute.amazonaws.com",
-    "localhost",
-    "127.0.0.1",
-    "frontend-nu-three-44.vercel.app"
-]
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', "api.codylife.uz,codylife.uz,ec2-16-16-115-194.eu-north-1.compute.amazonaws.com,localhost,127.0.0.1,frontend-nu-three-44.vercel.app").split(',')
 
 CORS_ALLOWED_ORIGINS = [
     "https://frontend-nu-three-44.vercel.app",
     "https://codylife.uz",
+    "https://www.codylife.uz",
+    "https://codylife.vercel.app",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://frontend-nu-three-44.vercel.app",
-    "https://codylife.uz",
-    "https://api.codylife.uz"
-]
-
-CORS_ALLOWED_ORIGINS = ["https://codylife.uz", "https://www.codylife.uz", "https://codylife.vercel.app"]
-
 CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = ["https://codylife.uz", "https://www.codylife.uz", "https://codylife.vercel.app"]
+
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', "https://frontend-nu-three-44.vercel.app,https://codylife.uz,https://www.codylife.uz,https://api.codylife.uz,https://codylife.vercel.app").split(',')
 
 # Application definition
 
@@ -109,7 +97,6 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -191,4 +178,15 @@ MEDIA_ROOT =  BASE_DIR / 'media'
 
 AUTH_USER_MODEL = 'users_control.CustomUser'
 
-CORS_ALLOW_ALL_ORIGINS = True
+# Security Settings for Production
+if not DEBUG:
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    # HSTS settings
+    SECURE_HSTS_SECONDS = 31536000 # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True

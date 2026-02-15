@@ -21,8 +21,15 @@ export default function LoginPage() {
             await authService.login({ username, password });
             toast.success('Welcome back!');
             router.push('/educenters');
-        } catch (err) {
-            toast.error('Invalid credentials. Please try again.');
+        } catch (err: any) {
+            console.error('Login error:', err);
+            if (err.response?.status === 401) {
+                toast.error('Invalid credentials. Please check your username and password.');
+            } else if (err.code === 'ERR_NETWORK') {
+                toast.error('Connection error. Please check if the backend is running and the API URL is correct.');
+            } else {
+                toast.error('An unexpected error occurred. Please try again later.');
+            }
         } finally {
             setIsLoading(false);
         }

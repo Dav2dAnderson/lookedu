@@ -22,21 +22,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     useEffect(() => {
         const token = getAccessToken();
-        const isAuth = !!token;
-        setIsAuthenticated(isAuth);
+        setIsAuthenticated(!!token);
         setIsLoading(false);
+    }, []);
+
+    useEffect(() => {
+        if (isLoading) return;
 
         const publicPaths = ['/login', '/register'];
         const isPublicPath = publicPaths.includes(pathname);
 
-        if (!isLoading) {
-            if (!isAuth && !isPublicPath) {
-                router.push('/login');
-            } else if (isAuth && isPublicPath) {
-                router.push('/educenters');
-            }
+        if (!isAuthenticated && !isPublicPath) {
+            router.push('/login');
+        } else if (isAuthenticated && isPublicPath) {
+            router.push('/educenters');
         }
-    }, [pathname, isLoading, router]);
+    }, [pathname, isAuthenticated, isLoading, router]);
 
     return (
         <AuthContext.Provider value={{ isAuthenticated, isLoading }}>
