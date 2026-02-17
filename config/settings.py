@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', "api.codylife.uz,codylife.uz,ec2-16-16-115-194.eu-north-1.compute.amazonaws.com,localhost,127.0.0.1,frontend-nu-three-44.vercel.app").split(',')
+ALLOWED_HOSTS = ["api.codylife.uz", "ec2-16-16-115-194.eu-north-1.compute.amazonaws.com", "localhost", "127.0.0.1"]
 
 CORS_ALLOWED_ORIGINS = [
     "https://frontend-nu-three-44.vercel.app",
