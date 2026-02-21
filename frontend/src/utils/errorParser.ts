@@ -32,6 +32,10 @@ export const parseBackendError = (errorData: any): string[] => {
     recurse(errorData);
 
     if (messages.length === 0) {
+        // Handle standard DRF 404 data shape or generic empty responses
+        if (errorData?.detail === 'Not found.') {
+            return ['Error 404: The requested resource was not found. Please check the URL or ID.'];
+        }
         return ['An unknown error occurred.'];
     }
 
