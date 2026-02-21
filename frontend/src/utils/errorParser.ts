@@ -12,6 +12,11 @@ export const parseBackendError = (errorData: any): string[] => {
         if (!data) return;
 
         if (typeof data === 'string') {
+            // Check if it's an HTML response (likely a 404 from Vercel)
+            if (data.trim().toLowerCase().startsWith('<!doctype html') || data.includes('<html')) {
+                messages.push('Error: Received an HTML response. The API might be misconfigured.');
+                return;
+            }
             messages.push(prefix ? `${prefix}: ${data}` : data);
         } else if (Array.isArray(data)) {
             data.forEach((item) => recurse(item, prefix));
