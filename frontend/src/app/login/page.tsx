@@ -24,12 +24,18 @@ export default function LoginPage() {
             await contextLogin(); // Update global auth state immediately
             toast.success('Welcome back!');
             router.push('/educenters');
+            import { parseBackendError } from '@/utils/errorParser';
+
+            // ... inside the component catch block ...
         } catch (err: any) {
             console.error('Login error:', err);
             if (err.response?.status === 401) {
                 toast.error('Invalid credentials. Please check your username and password.');
             } else if (err.code === 'ERR_NETWORK') {
                 toast.error('Connection error. Please check if the backend is running and the API URL is correct.');
+            } else if (err.response?.data) {
+                const messages = parseBackendError(err.response.data);
+                messages.forEach((msg) => toast.error(msg));
             } else {
                 toast.error('An unexpected error occurred. Please try again later.');
             }

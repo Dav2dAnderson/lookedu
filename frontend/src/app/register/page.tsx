@@ -35,19 +35,15 @@ export default function RegisterPage() {
             });
             toast.success('Account created successfully! Welcome to Lookedu.');
             router.push('/login');
+            import { parseBackendError } from '@/utils/errorParser';
+
+            // ... inside the component catch block ...
         } catch (err: any) {
             console.error('Registration error:', err);
             const errorData = err.response?.data;
-            if (errorData && typeof errorData === 'object') {
-                // Iterate through all fields and show their errors
-                Object.keys(errorData).forEach((field) => {
-                    const messages = errorData[field];
-                    if (Array.isArray(messages)) {
-                        messages.forEach((msg) => toast.error(`${field}: ${msg}`));
-                    } else {
-                        toast.error(`${field}: ${messages}`);
-                    }
-                });
+            if (errorData) {
+                const messages = parseBackendError(errorData);
+                messages.forEach((msg) => toast.error(msg));
             } else {
                 toast.error('Registration failed. Please check your connection and try again.');
             }
