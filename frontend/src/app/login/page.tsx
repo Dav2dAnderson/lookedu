@@ -8,6 +8,7 @@ import { useAuth } from '@/auth/AuthProvider';
 import { Loader2, User, Lock, LogIn, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
+import { parseBackendError } from '@/utils/errorParser';
 
 export default function LoginPage() {
     const { login: contextLogin, isLoading: isAuthLoading } = useAuth();
@@ -24,9 +25,6 @@ export default function LoginPage() {
             await contextLogin(); // Update global auth state immediately
             toast.success('Welcome back!');
             router.push('/educenters');
-            import { parseBackendError } from '@/utils/errorParser';
-
-            // ... inside the component catch block ...
         } catch (err: any) {
             console.error('Login error:', err);
             if (err.response?.status === 401) {

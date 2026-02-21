@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { Loader2, Mail, Lock, User, UserPlus, ArrowRight, Phone } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
+import { parseBackendError } from '@/utils/errorParser';
 
 export default function RegisterPage() {
     const [formData, setFormData] = useState({
@@ -35,9 +36,6 @@ export default function RegisterPage() {
             });
             toast.success('Account created successfully! Welcome to Lookedu.');
             router.push('/login');
-            import { parseBackendError } from '@/utils/errorParser';
-
-            // ... inside the component catch block ...
         } catch (err: any) {
             console.error('Registration error:', err);
             const errorData = err.response?.data;
