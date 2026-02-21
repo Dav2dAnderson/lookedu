@@ -8,9 +8,9 @@ type UserProfile = components['schemas']['UserShort'];
 export const apiClient = {
     auth: {
         login: (credentials: any) => api.post('/api/token/', credentials),
-        register: (userData: any) => api.post('/user/register/', userData), // Currently at root in backend
+        register: (userData: any) => api.post('/api/user/register/', userData),
         refresh: (refresh: string) => api.post('/api/token/refresh/', { refresh }),
-        logout: (refresh: string) => api.post('/user/logout/', { refresh }), // Currently at root in backend
+        logout: (refresh: string) => api.post('/api/user/logout/', { refresh }),
     },
     educenters: {
         list: () => api.get<EduceterList[]>('/api/educenters/'),
