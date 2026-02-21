@@ -4,11 +4,13 @@ import { useState } from 'react';
 import { authService } from '@/auth/authService';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Loader2, Mail, Lock, LogIn, ArrowRight } from 'lucide-react';
+import { useAuth } from '@/auth/AuthProvider';
+import { Loader2, User, Lock, LogIn, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 
 export default function LoginPage() {
+    const { login: contextLogin, isLoading: isAuthLoading } = useAuth();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +21,7 @@ export default function LoginPage() {
         setIsLoading(true);
         try {
             await authService.login({ username, password });
+            await contextLogin(); // Update global auth state immediately
             toast.success('Welcome back!');
             router.push('/educenters');
         } catch (err: any) {
@@ -34,6 +37,14 @@ export default function LoginPage() {
             setIsLoading(false);
         }
     };
+
+    if (isAuthLoading) {
+        return (
+            <div className="flex min-h-[90vh] items-center justify-center bg-gray-50 dark:bg-gray-950">
+                <Loader2 className="h-12 w-12 animate-spin text-indigo-600" />
+            </div>
+        );
+    }
 
     return (
         <div className="flex min-h-[90vh] items-center justify-center px-4 py-12 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-950 transition-colors">
@@ -58,7 +69,7 @@ export default function LoginPage() {
                         <div className="space-y-6">
                             <div className="relative group">
                                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-6 text-gray-400 group-focus-within:text-indigo-500 transition-colors">
-                                    <Mail className="h-6 w-6" />
+                                    <User className="h-6 w-6" />
                                 </div>
                                 <input
                                     type="text"

@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 
 export default function Navbar() {
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, logout: contextLogout } = useAuth();
     const [isDark, setIsDark] = useState(false);
     const [mounted, setMounted] = useState(false);
     const [scrolled, setScrolled] = useState(false);

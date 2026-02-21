@@ -2,13 +2,15 @@ import axios from 'axios';
 import { getAccessToken, getRefreshToken, setTokens, clearTokens } from '@/auth/tokenStorage';
 
 const getBaseUrl = () => {
-    if (process.env.NEXT_PUBLIC_API_BASE_URL) {
-        return process.env.NEXT_PUBLIC_API_BASE_URL;
+    let url = process.env.NEXT_PUBLIC_API_BASE_URL;
+    if (!url && typeof window !== 'undefined') {
+        url = window.location.origin;
     }
-    if (typeof window !== 'undefined') {
-        return window.location.origin;
+    if (!url) {
+        url = 'http://127.0.0.1:8000';
     }
-    return 'http://127.0.0.1:8000';
+    // Remove trailing slash if present
+    return url.replace(/\/$/, '');
 };
 
 const BASE_URL = getBaseUrl();
