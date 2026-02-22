@@ -42,7 +42,7 @@ class CentersRetrieveSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Educenters
-        fields = ['id', 'name', 'info', 'phone_number', 
+        fields = ['id', 'name', 'slug', 'info', 'phone_number', 
                   'phone_number_extra', 'courses', 'cost', 
                   'official_website', 'picture', 'course_ids']
 
