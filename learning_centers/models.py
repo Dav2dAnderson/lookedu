@@ -27,6 +27,7 @@ class Courses(models.Model):
 
 """ Education centers """
 class Educenters(models.Model):
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)  # by default we should write owner = 'ceo'
     picture = models.ImageField(upload_to="educenter_images/", null=True, blank=True)
     official_website = models.URLField(null=True, blank=True)
     cost = models.PositiveIntegerField(null=True, blank=True)

@@ -4,7 +4,7 @@ from rest_framework import viewsets, permissions
 
 from .models import Educenters, Application, Courses
 from .serializers import CentersListSerializer, CentersRetrieveSerializer, ApplicationsSerializer, CoursesSerializer
-from .permissions import IsOwnerOrAdmin
+from .permissions import IsOwnerOrAdmin, IsEduOwner
 
 # Create your views here.
 
@@ -24,7 +24,7 @@ class CentersView(viewsets.ModelViewSet):
         if self.action in ['list', 'retrieve']:
             permission_classes = [permissions.IsAuthenticated]
         else:
-            permission_classes = [permissions.IsAdminUser]
+            permission_classes = [permissions.IsAdminUser | IsEduOwner]
         return [permission() for permission in permission_classes]
     
 

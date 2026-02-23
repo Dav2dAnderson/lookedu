@@ -6,7 +6,7 @@ from .models import Courses, Educenters, Application
 
 @admin.register(Educenters)
 class EduAdmin(admin.ModelAdmin):
-    list_display = ['name', 'info']
+    list_display = ['name', 'info', 'owner']
 
 
 @admin.register(Courses)
