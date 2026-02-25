@@ -14,7 +14,11 @@ export const parseBackendError = (errorData: any): string[] => {
         if (typeof data === 'string') {
             // Check if it's an HTML response (likely a 404 from Vercel)
             if (data.trim().toLowerCase().startsWith('<!doctype html') || data.includes('<html')) {
-                messages.push('Error: Received an HTML response. The API might be misconfigured.');
+                let source = 'server';
+                if (data.includes('Vercel') || data.includes('NOT_FOUND')) source = 'Vercel (Frontend Routing)';
+                else if (data.includes('Django') || data.includes('not found')) source = 'Django (Backend API)';
+
+                messages.push(`Error: Received an HTML response from ${source}. This usually means a 404 or a misconfigured API URL.`);
                 return;
             }
             messages.push(prefix ? `${prefix}: ${data}` : data);
