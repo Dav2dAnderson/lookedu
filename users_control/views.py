@@ -14,9 +14,13 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     def post(self, request, *args, **kwargs):
         print("CONTENT_TYPE:", request.content_type)
         print("DATA:", request.data)
-        print("BODY:", request.body)
-        return super().post(request, *args, **kwargs)
-        
+        try:
+            return super().post(request, *args, **kwargs)
+        except Exception as e:
+            print("JWT ERROR:", repr(e))
+            traceback.print_exc()  # <-- mana shu sizga kerak traceback
+            return Response({"detail": "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 class UserRegistrationView(APIView):
     permission_classes = []
