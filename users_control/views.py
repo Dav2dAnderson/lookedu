@@ -4,9 +4,19 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
 
+from rest_framework_simplejwt.views import TokenObtainPairView
+
 from .serializers import UserRegistrationSerializer, UserLogOutSerializer, UserShortSerializer
 # Create your views here.
 
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    def post(self, request, *args, **kwargs):
+        print("CONTENT_TYPE:", request.content_type)
+        print("DATA:", request.data)
+        print("BODY:", request.body)
+        return super().post(request, *args, **kwargs)
+        
 
 class UserRegistrationView(APIView):
     permission_classes = []
