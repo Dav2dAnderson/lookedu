@@ -135,25 +135,25 @@ export default function EduceterDetailPage() {
                                     </div>
                                     <span>Contact Information</span>
                                 </h2>
-                                <div className="grid gap-6 sm:grid-cols-2">
-                                    <motion.div whileHover={{ y: -5 }} className="flex items-center space-x-4 rounded-2xl bg-gray-50 dark:bg-gray-800/50 p-6 border border-gray-100 dark:border-gray-800">
+                                <div className="grid gap-6">
+                                    <motion.div whileHover={{ y: -5 }} className="flex items-center space-x-4 rounded-2xl bg-gray-50 dark:bg-gray-800/50 p-6 border border-gray-100 dark:border-gray-800 w-full">
                                         <div className="p-3 bg-white dark:bg-gray-900 rounded-xl shadow-sm">
                                             <Phone className="h-6 w-6 text-indigo-500" />
                                         </div>
-                                        <div>
+                                        <div className="flex-1 min-w-0">
                                             <p className="text-[10px] font-black uppercase tracking-widest text-indigo-400">Principal Line</p>
-                                            <p className="text-gray-900 dark:text-gray-100 font-bold text-lg">{center.phone_number || 'N/A'}</p>
+                                            <p className="text-gray-900 dark:text-gray-100 font-bold text-lg sm:text-xl truncate sm:overflow-visible sm:whitespace-normal">{center.phone_number || 'N/A'}</p>
                                         </div>
                                     </motion.div>
 
                                     {center.phone_number_extra && (
-                                        <motion.div whileHover={{ y: -5 }} className="flex items-center space-x-4 rounded-2xl bg-gray-50 dark:bg-gray-800/50 p-6 border border-gray-100 dark:border-gray-800">
+                                        <motion.div whileHover={{ y: -5 }} className="flex items-center space-x-4 rounded-2xl bg-gray-50 dark:bg-gray-800/50 p-6 border border-gray-100 dark:border-gray-800 w-full">
                                             <div className="p-3 bg-white dark:bg-gray-900 rounded-xl shadow-sm">
                                                 <Phone className="h-6 w-6 text-purple-500" />
                                             </div>
-                                            <div>
+                                            <div className="flex-1 min-w-0">
                                                 <p className="text-[10px] font-black uppercase tracking-widest text-purple-400">Additional Line</p>
-                                                <p className="text-gray-900 dark:text-gray-100 font-bold text-lg">{center.phone_number_extra}</p>
+                                                <p className="text-gray-900 dark:text-gray-100 font-bold text-lg sm:text-xl truncate sm:overflow-visible sm:whitespace-normal">{center.phone_number_extra}</p>
                                             </div>
                                         </motion.div>
                                     )}

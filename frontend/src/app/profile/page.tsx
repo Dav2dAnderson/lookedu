@@ -128,9 +128,9 @@ export default function ProfilePage() {
                                     <Mail className="h-5 w-5 text-indigo-500" />
                                     <span className="text-sm font-medium text-gray-600 dark:text-gray-400 truncate">{profile.email || 'No email'}</span>
                                 </div>
-                                <div className="flex items-center space-x-3 rounded-xl bg-gray-50 p-4 dark:bg-gray-800/50">
-                                    <Phone className="h-5 w-5 text-indigo-500" />
-                                    <span className="text-sm font-medium text-gray-600 dark:text-gray-400">{profile.phone_number || 'No phone'}</span>
+                                <div className="flex items-center space-x-3 rounded-xl bg-gray-50 p-4 dark:bg-gray-800/50 min-w-0">
+                                    <Phone className="h-5 w-5 text-indigo-500 shrink-0" />
+                                    <span className="text-md font-bold text-gray-700 dark:text-gray-300 break-all">{profile.phone_number || 'No phone'}</span>
                                 </div>
                             </div>
 

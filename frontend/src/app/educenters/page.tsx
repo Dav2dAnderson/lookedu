@@ -187,9 +187,9 @@ export default function EducetersListPage() {
                                         </p>
 
                                         <div className="mt-auto space-y-4">
-                                            <div className="flex items-center space-x-3 text-sm font-bold text-indigo-600 dark:text-indigo-400">
-                                                <Phone className="h-5 w-5" />
-                                                <span>{center.phone_number || 'Consultation Line'}</span>
+                                            <div className="flex items-center space-x-3 text-md font-bold text-indigo-600 dark:text-indigo-400 min-w-0">
+                                                <Phone className="h-5 w-5 shrink-0" />
+                                                <span className="truncate group-hover:overflow-visible group-hover:whitespace-normal transition-all">{center.phone_number || 'Consultation Line'}</span>
                                             </div>
 
                                             <Link
