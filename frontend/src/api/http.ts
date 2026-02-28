@@ -18,7 +18,7 @@ const BASE_URL = getBaseUrl();
 const api = axios.create({
     baseURL: BASE_URL,
     headers: {
-        'Content-Type': 'application/json',
+        // Axios will set Content-Type automatically based on the data type (JSON or FormData)
     },
 });
 

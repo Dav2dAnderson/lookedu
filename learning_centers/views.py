@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, parsers
 
 from .models import Educenters, Application, Courses
 from .serializers import CentersListSerializer, CentersRetrieveSerializer, ApplicationsSerializer, CoursesSerializer
@@ -11,6 +11,7 @@ from .permissions import IsOwnerOrAdmin, IsEduOwner, HaveARightToAdd
 
 class CentersView(viewsets.ModelViewSet):
     queryset = Educenters.objects.all()
+    parser_classes = [parsers.MultiPartParser, parsers.FormParser, parsers.JSONParser]
     lookup_field = 'slug'
 
     def get_serializer_class(self):
