@@ -163,7 +163,7 @@ export default function AddEducenterPage() {
                                             name="name"
                                             value={formData.name}
                                             onChange={handleChange}
-                                            className="w-full rounded-2xl border-2 border-gray-50 bg-gray-50 p-4 pl-14 font-bold text-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:bg-white dark:bg-gray-800 dark:border-gray-800 transition-all shadow-sm"
+                                            className="w-full rounded-2xl border-2 border-gray-50 bg-gray-50 p-4 pl-14 font-bold text-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:bg-white dark:focus:bg-gray-950 dark:bg-gray-800 dark:border-gray-800 transition-all shadow-sm"
                                             placeholder="Elite Academy"
                                         />
                                     </div>
@@ -179,7 +179,7 @@ export default function AddEducenterPage() {
                                             value={formData.info}
                                             onChange={handleChange}
                                             rows={5}
-                                            className="w-full rounded-2xl border-2 border-gray-50 bg-gray-50 p-4 pl-14 font-bold text-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:bg-white dark:bg-gray-800 dark:border-gray-800 transition-all shadow-sm resize-none"
+                                            className="w-full rounded-2xl border-2 border-gray-50 bg-gray-50 p-4 pl-14 font-bold text-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:bg-white dark:focus:bg-gray-950 dark:bg-gray-800 dark:border-gray-800 transition-all shadow-sm resize-none"
                                             placeholder="Tell us about your center mission..."
                                         />
                                     </div>
@@ -219,7 +219,7 @@ export default function AddEducenterPage() {
                                             name="phone_number"
                                             value={formData.phone_number}
                                             onChange={handleChange}
-                                            className="w-full rounded-2xl border-2 border-gray-50 bg-gray-50 p-4 pl-14 font-bold text-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:bg-white dark:bg-gray-800 dark:border-gray-800 transition-all shadow-sm"
+                                            className="w-full rounded-2xl border-2 border-gray-50 bg-gray-50 p-4 pl-14 font-bold text-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:bg-white dark:focus:bg-gray-950 dark:bg-gray-800 dark:border-gray-800 transition-all shadow-sm"
                                             placeholder="+998 90 123 45 67"
                                         />
                                     </div>
@@ -234,7 +234,7 @@ export default function AddEducenterPage() {
                                             name="cost"
                                             value={formData.cost}
                                             onChange={handleChange}
-                                            className="w-full rounded-2xl border-2 border-gray-50 bg-gray-50 p-4 pl-14 font-bold text-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:bg-white dark:bg-gray-800 dark:border-gray-800 transition-all shadow-sm"
+                                            className="w-full rounded-2xl border-2 border-gray-50 bg-gray-50 p-4 pl-14 font-bold text-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:bg-white dark:focus:bg-gray-950 dark:bg-gray-800 dark:border-gray-800 transition-all shadow-sm"
                                             placeholder="500000"
                                         />
                                     </div>
@@ -248,7 +248,7 @@ export default function AddEducenterPage() {
                                             name="official_website"
                                             value={formData.official_website}
                                             onChange={handleChange}
-                                            className="w-full rounded-2xl border-2 border-gray-50 bg-gray-50 p-4 pl-14 font-bold text-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:bg-white dark:bg-gray-800 dark:border-gray-800 transition-all shadow-sm"
+                                            className="w-full rounded-2xl border-2 border-gray-50 bg-gray-50 p-4 pl-14 font-bold text-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:bg-white dark:focus:bg-gray-950 dark:bg-gray-800 dark:border-gray-800 transition-all shadow-sm"
                                             placeholder="https://example.com"
                                         />
                                     </div>
