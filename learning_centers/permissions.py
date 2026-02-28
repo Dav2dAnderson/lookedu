@@ -23,4 +23,6 @@ class IsEduOwner(BasePermission):
         
         return True
 
-        
+class HaveARightToAdd(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.have_right_to_add

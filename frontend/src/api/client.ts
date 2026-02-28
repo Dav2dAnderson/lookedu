@@ -15,6 +15,8 @@ export const apiClient = {
     educenters: {
         list: () => api.get<EduceterList[]>('/api/educenters/'),
         get: (slug: string) => api.get<EduceterDetail>(`/api/educenters/${slug}/`),
+        create: (data: any) => api.post('/api/educenters/', data),
+        delete: (slug: string) => api.delete(`/api/educenters/${slug}/`),
     },
     profile: {
         me: () => api.get<UserProfile>('/api/me/'),
@@ -25,5 +27,8 @@ export const apiClient = {
         create: (data: { center_id: number; course_id: number; content?: string }) =>
             api.post('/api/my-applications/', data),
         delete: (index: number) => api.delete(`/api/my-applications/${index}/`),
+    },
+    courses: {
+        list: () => api.get<any[]>('/api/courses/'),
     },
 };

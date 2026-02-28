@@ -25,6 +25,7 @@ class Roles(models.Model):
 class CustomUser(AbstractUser):
     phone_number = models.CharField(max_length=20, unique=True)
     role = models.ForeignKey(Roles, on_delete=models.CASCADE, null=True, blank=True)
+    have_right_to_add = models.BooleanField(default=False)
     # picture = models.ImageField(upload_to='users_pictures/', null=True, blank=True)
 
     REQUIRED_FIELDS = ['phone_number']

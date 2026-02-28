@@ -21,7 +21,8 @@ class CentersListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Educenters
-        fields = ['id', 'name', 'slug', 'info', 'phone_number', 'picture', 'cost', 'detail_url']
+        fields = ['id', 'name', 'slug', 'info', 'phone_number', 'picture', 'cost', 'detail_url', 'owner']
+        read_only_fields = ("owner", )
 
     def get_detail_url(self, obj):
         request = self.context.get('request')

@@ -4,12 +4,17 @@ import { useEffect, useState } from 'react';
 import { apiClient } from '@/api/client';
 import { components } from '@/api/generated/schema';
 import Link from 'next/link';
-import { Loader2, Phone, MapPin, Search, ArrowRight, Star, Filter } from 'lucide-react';
+import { Loader2, Phone, MapPin, Search, ArrowRight, Star, Filter, Plus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAuth } from '@/auth/AuthProvider';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 type Educeter = components['schemas']['CentersList'] & { cost?: number | null };
 
 export default function EducetersListPage() {
+    const { user } = useAuth();
+    const router = useRouter();
     const [centers, setCenters] = useState<Educeter[]>([]);
     const [filteredCenters, setFilteredCenters] = useState<Educeter[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -38,6 +43,14 @@ export default function EducetersListPage() {
         );
         setFilteredCenters(filtered);
     }, [searchQuery, centers]);
+
+    const handleAddClick = () => {
+        if (user?.have_right_to_add) {
+            router.push('/educenters/add');
+        } else {
+            toast.error('You do not have permission to add educational centers. Please contact support.');
+        }
+    };
 
     if (isLoading) {
         return (
@@ -129,16 +142,27 @@ export default function EducetersListPage() {
 
             {/* List Section */}
             <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between mb-12">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12 space-y-4 sm:space-y-0">
                     <h2 className="text-3xl font-black text-gray-900 dark:text-white">
                         Available Centers
                         <span className="ml-4 text-sm font-bold text-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 px-3 py-1 rounded-full">
                             {filteredCenters.length} Results
                         </span>
                     </h2>
-                    <div className="flex items-center space-x-2 text-gray-400">
-                        <Filter className="h-5 w-5" />
-                        <span className="text-sm font-bold uppercase tracking-widest">Filter</span>
+                    <div className="flex items-center space-x-4">
+                        <motion.button
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={handleAddClick}
+                            className="flex items-center space-x-2 rounded-2xl bg-indigo-600 px-6 py-3 text-sm font-black text-white shadow-lg hover:bg-indigo-700 transition-all"
+                        >
+                            <Plus className="h-4 w-4" />
+                            <span>Add Center</span>
+                        </motion.button>
+                        <div className="flex items-center space-x-2 text-gray-400">
+                            <Filter className="h-5 w-5" />
+                            <span className="text-sm font-bold uppercase tracking-widest">Filter</span>
+                        </div>
                     </div>
                 </div>
 
