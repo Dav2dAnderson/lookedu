@@ -1,18 +1,24 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { apiClient } from '@/api/client';
 import { useRouter } from 'next/navigation';
-import { Loader2, ArrowLeft, Send, Image as ImageIcon, Globe, Phone, Info, GraduationCap, DollarSign, Check } from 'lucide-react';
+import { Loader2, ArrowLeft, Send, Image as ImageIcon, Globe, Phone, Info, GraduationCap, Check, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import { useAuth } from '@/auth/AuthProvider';
+import axios from 'axios';
 
 export default function AddEducenterPage() {
     const { user, isLoading: authLoading } = useAuth();
     const router = useRouter();
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
     const [isLoading, setIsLoading] = useState(false);
     const [courses, setCourses] = useState<any[]>([]);
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+
     const [formData, setFormData] = useState({
         name: '',
         info: '',
@@ -20,7 +26,6 @@ export default function AddEducenterPage() {
         phone_number_extra: '',
         cost: '',
         official_website: '',
-        picture: '',
         course_ids: [] as number[]
     });
 
@@ -37,7 +42,7 @@ export default function AddEducenterPage() {
                 const { data } = await apiClient.courses.list();
                 setCourses(data);
             } catch (err) {
-                console.error('Failed to load courses');
+                console.error('Failed to load courses', err);
             }
         };
         if (user?.have_right_to_add) {
@@ -59,20 +64,58 @@ export default function AddEducenterPage() {
         }));
     };
 
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setSelectedImage(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const removeImage = () => {
+        setSelectedImage(null);
+        setImagePreview(null);
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+        }
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
+
         try {
-            const payload = {
-                ...formData,
-                cost: formData.cost ? parseInt(formData.cost) : null,
-                slug: formData.name.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '')
-            };
-            await apiClient.educenters.create(payload);
-            toast.success('Educational center added successfully!');
+            // Using FormData for multipart submission (required for file uploads)
+            const submitData = new FormData();
+            submitData.append('name', formData.name);
+            submitData.append('info', formData.info);
+            submitData.append('phone_number', formData.phone_number);
+            submitData.append('phone_number_extra', formData.phone_number_extra);
+            if (formData.cost) submitData.append('cost', formData.cost);
+            submitData.append('official_website', formData.official_website);
+
+            // Django ManyToMany expects multiple fields or a specific format
+            formData.course_ids.forEach(id => {
+                submitData.append('course_ids', id.toString());
+            });
+
+            if (selectedImage) {
+                submitData.append('picture', selectedImage);
+            }
+
+            // Using axios directly or extending apiClient for FormData if needed
+            // Our apiClient uses axios underneath
+            await apiClient.educenters.create(submitData);
+
+            toast.success('Educational center created successfully!');
             router.push('/educenters');
         } catch (err: any) {
-            toast.error(err.response?.data?.detail || 'Failed to add center. Please check your data.');
+            console.error('Submit error:', err);
+            toast.error(err.response?.data?.detail || 'Failed to create center. Please verify your data.');
         } finally {
             setIsLoading(false);
         }
@@ -114,7 +157,7 @@ export default function AddEducenterPage() {
                                             name="name"
                                             value={formData.name}
                                             onChange={handleChange}
-                                            className="w-full rounded-2xl border-2 border-gray-50 bg-gray-50 p-4 pl-14 font-bold text-gray-900 focus:border-indigo-500 focus:bg-white dark:bg-gray-800 dark:border-gray-800 dark:text-white transition-all shadow-sm"
+                                            className="w-full rounded-2xl border-2 border-gray-50 bg-gray-50 p-4 pl-14 font-bold text-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:bg-white dark:bg-gray-800 dark:border-gray-800 transition-all shadow-sm"
                                             placeholder="Elite Academy"
                                         />
                                     </div>
@@ -130,7 +173,7 @@ export default function AddEducenterPage() {
                                             value={formData.info}
                                             onChange={handleChange}
                                             rows={5}
-                                            className="w-full rounded-2xl border-2 border-gray-50 bg-gray-50 p-4 pl-14 font-bold text-gray-900 focus:border-indigo-500 focus:bg-white dark:bg-gray-800 dark:border-gray-800 dark:text-white transition-all shadow-sm resize-none"
+                                            className="w-full rounded-2xl border-2 border-gray-50 bg-gray-50 p-4 pl-14 font-bold text-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:bg-white dark:bg-gray-800 dark:border-gray-800 transition-all shadow-sm resize-none"
                                             placeholder="Tell us about your center mission..."
                                         />
                                     </div>
@@ -139,7 +182,7 @@ export default function AddEducenterPage() {
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 pl-2">Available Courses</label>
                                     <div className="grid grid-cols-2 gap-3 p-2 border-2 border-gray-50 dark:border-gray-800 rounded-2xl bg-gray-50/50 dark:bg-gray-800/50 max-h-48 overflow-y-auto custom-scrollbar">
-                                        {courses.map(course => (
+                                        {courses.length > 0 ? courses.map(course => (
                                             <button
                                                 key={course.id}
                                                 type="button"
@@ -152,7 +195,9 @@ export default function AddEducenterPage() {
                                                 <span className="truncate mr-2">{course.title}</span>
                                                 {formData.course_ids.includes(course.id) && <Check className="h-3 w-3 shrink-0" />}
                                             </button>
-                                        ))}
+                                        )) : (
+                                            <div className="col-span-2 py-4 text-center text-xs font-bold text-gray-400">Loading courses...</div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -168,7 +213,7 @@ export default function AddEducenterPage() {
                                             name="phone_number"
                                             value={formData.phone_number}
                                             onChange={handleChange}
-                                            className="w-full rounded-2xl border-2 border-gray-50 bg-gray-50 p-4 pl-14 font-bold text-gray-900 focus:border-indigo-500 focus:bg-white dark:bg-gray-800 dark:border-gray-800 dark:text-white transition-all shadow-sm"
+                                            className="w-full rounded-2xl border-2 border-gray-50 bg-gray-50 p-4 pl-14 font-bold text-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:bg-white dark:bg-gray-800 dark:border-gray-800 transition-all shadow-sm"
                                             placeholder="+998 90 123 45 67"
                                         />
                                     </div>
@@ -177,14 +222,14 @@ export default function AddEducenterPage() {
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 pl-2">Cost per Month (UZS)</label>
                                     <div className="relative">
-                                        <DollarSign className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                                        <div className="absolute left-5 top-1/2 -translate-y-1/2 font-black text-indigo-500 text-xs">UZS</div>
                                         <input
                                             type="number"
                                             name="cost"
                                             value={formData.cost}
                                             onChange={handleChange}
-                                            className="w-full rounded-2xl border-2 border-gray-50 bg-gray-50 p-4 pl-14 font-bold text-gray-900 focus:border-indigo-500 focus:bg-white dark:bg-gray-800 dark:border-gray-800 dark:text-white transition-all shadow-sm"
-                                            placeholder="500,000"
+                                            className="w-full rounded-2xl border-2 border-gray-50 bg-gray-50 p-4 pl-14 font-bold text-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:bg-white dark:bg-gray-800 dark:border-gray-800 transition-all shadow-sm"
+                                            placeholder="500000"
                                         />
                                     </div>
                                 </div>
@@ -197,22 +242,43 @@ export default function AddEducenterPage() {
                                             name="official_website"
                                             value={formData.official_website}
                                             onChange={handleChange}
-                                            className="w-full rounded-2xl border-2 border-gray-50 bg-gray-50 p-4 pl-14 font-bold text-gray-900 focus:border-indigo-500 focus:bg-white dark:bg-gray-800 dark:border-gray-800 dark:text-white transition-all shadow-sm"
+                                            className="w-full rounded-2xl border-2 border-gray-50 bg-gray-50 p-4 pl-14 font-bold text-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:bg-white dark:bg-gray-800 dark:border-gray-800 transition-all shadow-sm"
                                             placeholder="https://example.com"
                                         />
                                     </div>
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 pl-2">Picture URL</label>
-                                    <div className="relative">
-                                        <ImageIcon className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 pl-2">Center Picture</label>
+                                    <div
+                                        onClick={() => fileInputRef.current?.click()}
+                                        className="relative flex flex-col items-center justify-center w-full h-40 rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-750 transition-all cursor-pointer overflow-hidden group"
+                                    >
+                                        {imagePreview ? (
+                                            <>
+                                                <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
+                                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                    <span className="text-white text-xs font-black">Change Image</span>
+                                                </div>
+                                                <button
+                                                    onClick={(e) => { e.stopPropagation(); removeImage(); }}
+                                                    className="absolute top-2 right-2 p-1.5 bg-red-500 text-white rounded-full shadow-lg hover:bg-red-600 transition-colors"
+                                                >
+                                                    <X className="h-4 w-4" />
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <ImageIcon className="h-10 w-10 text-gray-400 mb-2" />
+                                                <span className="text-xs font-black text-gray-400">Click to upload photo</span>
+                                            </>
+                                        )}
                                         <input
-                                            name="picture"
-                                            value={formData.picture}
-                                            onChange={handleChange}
-                                            className="w-full rounded-2xl border-2 border-gray-50 bg-gray-50 p-4 pl-14 font-bold text-gray-900 focus:border-indigo-500 focus:bg-white dark:bg-gray-800 dark:border-gray-800 dark:text-white transition-all shadow-sm"
-                                            placeholder="https://images.unsplash.com/..."
+                                            type="file"
+                                            ref={fileInputRef}
+                                            onChange={handleImageChange}
+                                            accept="image/*"
+                                            className="hidden"
                                         />
                                     </div>
                                 </div>

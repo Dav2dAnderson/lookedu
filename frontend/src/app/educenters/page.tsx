@@ -48,7 +48,11 @@ export default function EducetersListPage() {
         if (user?.have_right_to_add) {
             router.push('/educenters/add');
         } else {
-            toast.error('You do not have permission to add educational centers. Please contact support.');
+            console.log('User object:', user);
+            const status = user
+                ? (user.have_right_to_add === undefined ? 'field missing in API response' : `value is ${user.have_right_to_add}`)
+                : 'user object is null';
+            toast.error(`Permission denied. Right to add: ${status}. Please ensure backend changes are deployed and you have re-logged.`);
         }
     };
 
