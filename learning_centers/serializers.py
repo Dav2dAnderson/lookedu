@@ -46,6 +46,7 @@ class CentersRetrieveSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'slug', 'info', 'phone_number', 
                   'phone_number_extra', 'courses', 'cost', 
                   'official_website', 'picture', 'course_ids']
+        read_only_fields = ['slug']
 
 
 

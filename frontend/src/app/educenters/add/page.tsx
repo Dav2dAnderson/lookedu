@@ -7,6 +7,7 @@ import { Loader2, ArrowLeft, Send, Image as ImageIcon, Globe, Phone, Info, Gradu
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import { useAuth } from '@/auth/AuthProvider';
+import { parseBackendError } from '@/utils/errorParser';
 import axios from 'axios';
 
 export default function AddEducenterPage() {
@@ -115,7 +116,12 @@ export default function AddEducenterPage() {
             router.push('/educenters');
         } catch (err: any) {
             console.error('Submit error:', err);
-            toast.error(err.response?.data?.detail || 'Failed to create center. Please verify your data.');
+            if (err.response?.data) {
+                const messages = parseBackendError(err.response.data);
+                messages.forEach(msg => toast.error(msg));
+            } else {
+                toast.error('Failed to create center. Please verify your data.');
+            }
         } finally {
             setIsLoading(false);
         }
@@ -188,8 +194,8 @@ export default function AddEducenterPage() {
                                                 type="button"
                                                 onClick={() => handleCourseToggle(course.id)}
                                                 className={`flex items-center justify-between p-3 rounded-xl text-xs font-black transition-all ${formData.course_ids.includes(course.id)
-                                                        ? 'bg-indigo-600 text-white shadow-md'
-                                                        : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 hover:border-indigo-400 border border-transparent'
+                                                    ? 'bg-indigo-600 text-white shadow-md'
+                                                    : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 hover:border-indigo-400 border border-transparent'
                                                     }`}
                                             >
                                                 <span className="truncate mr-2">{course.title}</span>
