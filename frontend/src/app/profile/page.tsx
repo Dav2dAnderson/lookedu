@@ -13,11 +13,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 
-type UserProfile = components['schemas']['UserShort'] & {
-    have_right_to_add?: boolean;
-    is_staff?: boolean;
-    is_center_owner?: boolean;
-};
+type UserProfile = components['schemas']['UserShort'] & { have_right_to_add?: boolean };
 type Application = components['schemas']['Applications'];
 
 export default function ProfilePage() {
@@ -42,14 +38,8 @@ export default function ProfilePage() {
                 setProfile(userData);
                 setApplications(appsRes.data);
 
-                console.log('Profile Data:', userData);
-
-                // Fetch received applications if owner or staff
-                const canViewApplications = userData.have_right_to_add ||
-                    userData.is_staff ||
-                    userData.is_center_owner;
-
-                if (canViewApplications) {
+                // Fetch received applications ONLY if they have the explicit right
+                if (userData.have_right_to_add) {
                     try {
                         const recAppsRes = await apiClient.centerApplications.list();
                         setReceivedApplications(recAppsRes.data);
@@ -261,8 +251,8 @@ export default function ProfilePage() {
                         </div>
                     </section>
 
-                    {/* Received Applications Section (For Owners) */}
-                    {(profile.have_right_to_add || profile.is_staff || profile.is_center_owner) && (
+                    {/* Received Applications Section (For Authorized Users) */}
+                    {profile.have_right_to_add && (
                         <section>
                             <h2 className="flex items-center space-x-2 text-2xl font-black text-gray-900 dark:text-white mb-6">
                                 <FileText className="h-6 w-6 text-purple-600 dark:text-purple-400" />

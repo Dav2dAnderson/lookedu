@@ -52,12 +52,6 @@ class UserLogOutSerializer(serializers.Serializer):
 
 
 class UserShortSerializer(serializers.ModelSerializer):
-    is_center_owner = serializers.SerializerMethodField()
-
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'phone_number', 'email', 'have_right_to_add', 'is_staff', 'is_center_owner')
-
-    def get_is_center_owner(self, obj):
-        # Check if the user owns any educational centers
-        return obj.educenters_set.exists()
+        fields = ('username', 'first_name', 'last_name', 'phone_number', 'email', 'have_right_to_add')
