@@ -35,7 +35,7 @@ class CentersView(viewsets.ModelViewSet):
 class ApplicationsView(viewsets.ModelViewSet):
     queryset = Application.objects.all()
     serializer_class = ApplicationsSerializer
-    permission_classes = [permissions.IsAuthenticated, IsOwnerOrAdmin]
+    permission_classes = [permissions.IsAuthenticated]
     lookup_field = 'index'
 
     def perform_create(self, serializer):
@@ -50,3 +50,12 @@ class CoursesView(viewsets.ModelViewSet):
     serializer_class = CoursesSerializer
     permission_classes = [permissions.IsAuthenticated]
     lookup_field = 'slug'
+
+
+class EducentersApplicationsView(viewsets.ModelViewSet):
+    queryset = Application.objects.all()
+    serializer_class = ApplicationsSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Application.objects.filter(center__owner=self.request.user)
