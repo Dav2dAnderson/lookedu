@@ -31,4 +31,7 @@ export const apiClient = {
     courses: {
         list: () => api.get<any[]>('/api/courses/'),
     },
+    centerApplications: {
+        list: () => api.get<any[]>('/api/my-educenters-applications/'),
+    },
 };

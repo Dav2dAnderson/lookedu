@@ -13,12 +13,13 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 
-type UserProfile = components['schemas']['UserShort'];
+type UserProfile = components['schemas']['UserShort'] & { have_right_to_add?: boolean };
 type Application = components['schemas']['Applications'];
 
 export default function ProfilePage() {
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [applications, setApplications] = useState<Application[]>([]);
+    const [receivedApplications, setReceivedApplications] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -35,6 +36,16 @@ export default function ProfilePage() {
                 ]);
                 setProfile(profileRes.data);
                 setApplications(appsRes.data);
+
+                // Fetch received applications if owner
+                if (profileRes.data.have_right_to_add) {
+                    try {
+                        const recAppsRes = await apiClient.centerApplications.list();
+                        setReceivedApplications(recAppsRes.data);
+                    } catch (recErr) {
+                        console.error('Failed to load received applications', recErr);
+                    }
+                }
             } catch (err: any) {
                 setError('Failed to load profile data.');
                 toast.error('Session expired. Please login again.');
@@ -237,6 +248,77 @@ export default function ProfilePage() {
                             </AnimatePresence>
                         </div>
                     </section>
+
+                    {/* Received Applications Section (For Owners) */}
+                    {profile.have_right_to_add && (
+                        <section>
+                            <h2 className="flex items-center space-x-2 text-2xl font-black text-gray-900 dark:text-white mb-6">
+                                <FileText className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                                <span>Received Applications</span>
+                            </h2>
+
+                            <div className="grid gap-4">
+                                <AnimatePresence mode="popLayout">
+                                    {receivedApplications.length > 0 ? (
+                                        receivedApplications.map((app, idx) => (
+                                            <motion.div
+                                                key={app.id || idx}
+                                                layout
+                                                initial={{ opacity: 0, x: -20 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                exit={{ opacity: 0, scale: 0.95 }}
+                                                transition={{ delay: idx * 0.05 }}
+                                                className="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm border border-gray-100 transition-all hover:shadow-md dark:bg-gray-900 dark:border-gray-800"
+                                            >
+                                                <div className="flex items-start justify-between">
+                                                    <div className="flex space-x-4">
+                                                        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-purple-50 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400">
+                                                            <User className="h-7 w-7" />
+                                                        </div>
+                                                        <div>
+                                                            <div className="flex items-center space-x-2">
+                                                                <h3 className="text-xl font-bold text-gray-900 dark:text-white leading-tight">
+                                                                    {app.owner.first_name} {app.owner.last_name}
+                                                                </h3>
+                                                                <span className="text-xs font-medium text-gray-400">(@{app.owner.username})</span>
+                                                            </div>
+                                                            <p className="text-md font-bold text-purple-600 dark:text-purple-400">
+                                                                Applying for: {app.course.title} @ {app.center.name}
+                                                            </p>
+                                                            <div className="mt-3 flex flex-wrap gap-3 items-center text-xs">
+                                                                <span className="flex items-center text-gray-400 bg-gray-50 dark:bg-gray-800 dark:text-gray-500 px-2 py-1 rounded-lg">
+                                                                    Received on {formatDate(app.created_date)}
+                                                                </span>
+                                                                <a
+                                                                    href={`tel:${app.owner.phone_number}`}
+                                                                    className="flex items-center gap-1 rounded-lg bg-indigo-50 px-2 py-1 text-indigo-700 font-bold hover:bg-indigo-100 transition-colors dark:bg-indigo-900/20 dark:text-indigo-400"
+                                                                >
+                                                                    <Phone className="h-3 w-3" />
+                                                                    {app.owner.phone_number}
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {app.content && (
+                                                    <div className="mt-4 p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800">
+                                                        <p className="text-sm text-gray-600 dark:text-gray-400 italic">
+                                                            "{app.content}"
+                                                        </p>
+                                                    </div>
+                                                )}
+                                            </motion.div>
+                                        ))
+                                    ) : (
+                                        <div className="rounded-3xl border-2 border-dashed border-gray-100 dark:border-gray-800 p-12 text-center">
+                                            <p className="text-gray-500 dark:text-gray-400 font-bold">No applications received yet.</p>
+                                        </div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+                        </section>
+                    )}
                 </div>
             </motion.div>
 
