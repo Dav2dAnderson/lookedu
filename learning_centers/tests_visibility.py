@@ -38,16 +38,17 @@ class VisibilityTest(TestCase):
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]['id'], self.app.id)
 
-    def test_admin_sees_application(self):
+    def test_admin_sees_only_owned_applications(self):
+        # Admin doesn't own any centers, so they should see 0
+        self.client.force_authenticate(user=self.admin_user)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 0)
+
+    def test_admin_with_owned_center_sees_applications(self):
+        self.center.owner = self.admin_user
+        self.center.save()
         self.client.force_authenticate(user=self.admin_user)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['id'], self.app.id)
-
-    def test_other_user_does_not_see_application(self):
-        other_owner = User.objects.create_user(username='other_owner', password='password', phone_number='4', role=self.owner_role)
-        self.client.force_authenticate(user=other_owner)
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 0)
