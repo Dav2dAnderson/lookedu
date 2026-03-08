@@ -25,6 +25,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop('password_confirm')
 
+        from .models import Roles
+        role_user, _ = Roles.objects.get_or_create(name='user')
+        
         user = User.objects.create_user(
             username=validated_data['username'],
             password=validated_data['password'],
@@ -32,6 +35,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             last_name=validated_data['last_name'],
             phone_number=validated_data['phone_number'],
             email=validated_data['email'],
+            role=role_user,
+            have_right_to_add=False # Default to student
         )
         return user
     

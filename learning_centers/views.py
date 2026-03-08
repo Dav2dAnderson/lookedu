@@ -58,4 +58,7 @@ class EducentersApplicationsView(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Application.objects.filter(center__owner=self.request.user)
+        user = self.request.user
+        if user.is_staff or user.is_superuser or (user.role and user.role.name == 'admin'):
+            return Application.objects.all()
+        return Application.objects.filter(center__owner=user)
