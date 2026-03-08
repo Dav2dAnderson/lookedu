@@ -43,7 +43,7 @@ export default function ProfilePage() {
                     try {
                         const recAppsRes = await apiClient.centerApplications.list();
                         setReceivedApplications(recAppsRes.data);
-                        console.log('Received Applications:', recAppsRes.data);
+
                     } catch (recErr) {
                         console.error('Failed to load received applications', recErr);
                     }

@@ -7,19 +7,6 @@ from rest_framework import status, permissions
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from .serializers import UserRegistrationSerializer, UserLogOutSerializer, UserShortSerializer
-# Create your views here.
-
-
-# class CustomTokenObtainPairView(TokenObtainPairView):
-#     def post(self, request, *args, **kwargs):
-#         print("CONTENT_TYPE:", request.content_type)
-#         print("DATA:", request.data)
-#         try:
-#             return super().post(request, *args, **kwargs)
-#         except Exception as e:
-#             print("JWT ERROR:", repr(e))
-#             traceback.print_exc()  # <-- mana shu sizga kerak traceback
-#             return Response({"detail": "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class UserRegistrationView(APIView):

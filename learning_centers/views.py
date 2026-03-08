@@ -6,7 +6,7 @@ from .models import Educenters, Application, Courses
 from .serializers import CentersListSerializer, CentersRetrieveSerializer, ApplicationsSerializer, CoursesSerializer
 from .permissions import IsOwnerOrAdmin, IsEduOwner, HaveARightToAdd
 
-# Create your views here.
+
 
 
 class CentersView(viewsets.ModelViewSet):

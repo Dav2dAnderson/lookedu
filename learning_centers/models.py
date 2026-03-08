@@ -4,10 +4,10 @@ from django.db.models import Max
 
 from users_control.models import CustomUser
 
-# Create your models here.
 
 
-""" EDU centers' courses """
+
+
 class Courses(models.Model):
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=120, null=True, blank=True, unique=True)
@@ -25,7 +25,7 @@ class Courses(models.Model):
         verbose_name_plural = 'Courses'
 
 
-""" Education centers """
+
 class Educenters(models.Model):
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)  # by default we should write owner = 'ceo'
     picture = models.ImageField(upload_to="educenter_images/", null=True, blank=True)
