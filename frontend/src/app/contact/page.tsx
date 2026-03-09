@@ -91,28 +91,6 @@ export default function ContactPage() {
                             </p>
                         </div>
 
-                        <div className="grid gap-6">
-                            {[
-                                { icon: Mail, label: 'Email Support', value: 'hello@lookedu.com', color: 'indigo' },
-                                { icon: MessageSquare, label: 'Chat with Us', value: '24/7 Response Time', color: 'purple' }
-                            ].map((item, idx) => (
-                                <motion.div
-                                    key={idx}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.2 + (idx * 0.1) }}
-                                    className="flex items-center space-x-5 p-6 rounded-3xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 group hover:border-indigo-500 dark:hover:border-indigo-400 transition-colors shadow-sm"
-                                >
-                                    <div className={`h-14 w-14 rounded-2xl flex items-center justify-center bg-${item.color}-50 dark:bg-${item.color}-900/20 text-${item.color}-600 dark:text-${item.color}-400`}>
-                                        <item.icon className="h-6 w-6" />
-                                    </div>
-                                    <div>
-                                        <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">{item.label}</p>
-                                        <p className="text-lg font-black text-gray-900 dark:text-white">{item.value}</p>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
                     </motion.div>
 
                     {/* Right Side: Form */}
