@@ -34,4 +34,8 @@ export const apiClient = {
     centerApplications: {
         list: () => api.get<any[]>('/api/my-educenters-applications/'),
     },
+    contact: {
+        sendMessage: (data: { first_name: string; last_name: string; email: string; message: string }) =>
+            api.post('/contact/', data),
+    }
 };

@@ -6,7 +6,7 @@ from rest_framework import status, permissions
 
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from .serializers import UserRegistrationSerializer, UserLogOutSerializer, UserShortSerializer
+from .serializers import UserRegistrationSerializer, UserLogOutSerializer, UserShortSerializer, ContactMessageSerializer
 
 
 class UserRegistrationView(APIView):
@@ -44,5 +44,14 @@ class MeView(APIView):
         return Response(serializer.data)
 
 
+class ContactMessageView(APIView):
+    permission_classes = []
+
+    def post(self, request):
+        serializer = ContactMessageSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response({'detail': 'Message sent successfully'}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

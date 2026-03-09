@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import CustomUser, Roles
+from .models import CustomUser, Roles, ContactMessage
 # Register your models here.
 
 
@@ -13,6 +13,10 @@ class RoleAdmin(admin.ModelAdmin):
 class CustomUserAdmin(admin.ModelAdmin):
     list_display = ['username', 'first_name', 'last_name', 'email', 'phone_number', 'role']
 
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ['first_name', 'last_name', 'email', 'created_date']
 
 
 

@@ -3,7 +3,7 @@ from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
 from django.contrib.auth import get_user_model
 
-from .models import CustomUser
+from .models import CustomUser, ContactMessage
 
 
 User = get_user_model()
@@ -60,3 +60,10 @@ class UserShortSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'phone_number', 'email', 'have_right_to_add')
+
+
+class ContactMessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactMessage
+        fields = ['first_name', 'last_name', 'email', 'message']
+

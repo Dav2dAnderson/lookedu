@@ -3,7 +3,7 @@
 import { useAuth } from '@/auth/AuthProvider';
 import { authService } from '@/auth/authService';
 import Link from 'next/link';
-import { User, LogOut, Home, Sun, Moon } from 'lucide-react';
+import { User, LogOut, Home, Sun, Moon, Mail } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
@@ -112,6 +112,14 @@ export default function Navbar() {
                                 >
                                     <Home className="h-4 w-4" />
                                     <span className="hidden sm:inline">Centers</span>
+                                </Link>
+
+                                <Link
+                                    href="/contact"
+                                    className="flex items-center space-x-2 rounded-xl px-3 py-2 text-sm font-semibold text-gray-600 transition-all hover:bg-gray-100 hover:text-indigo-600 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-indigo-400"
+                                >
+                                    <Mail className="h-4 w-4" />
+                                    <span className="hidden sm:inline">Contact</span>
                                 </Link>
 
                                 <Link

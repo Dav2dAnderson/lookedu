@@ -38,3 +38,17 @@ class CustomUser(AbstractUser):
         verbose_name_plural = 'Users'
     
 
+class ContactMessage(models.Model):
+    first_name = models.CharField(max_length=120)
+    last_name = models.CharField(max_length=120)
+    email = models.EmailField()
+    message = models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email
+
+    class Meta:
+        verbose_name = 'Contact Message'
+        verbose_name_plural = 'Contact Messages'
+
