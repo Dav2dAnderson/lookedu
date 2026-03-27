@@ -2,6 +2,8 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
 from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
+from django.core import settings
 
 from .models import CustomUser, ContactMessage
 
@@ -38,6 +40,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             role=role_user,
             have_right_to_add=False # Default to student
         )
+
+        send_mail("Welcome!", "Thanks for registering.", settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
+
         return user
     
 
