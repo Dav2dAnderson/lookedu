@@ -15,6 +15,7 @@ export default function RegisterPage() {
         email: '',
         phone_number: '',
         password: '',
+        password_confirm: '',
         first_name: '',
         last_name: ''
     });
@@ -23,6 +24,10 @@ export default function RegisterPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (formData.password !== formData.password_confirm) {
+            toast.error('Passwords do not match');
+            return;
+        }
         setIsLoading(true);
         try {
             await authService.register({
@@ -32,7 +37,7 @@ export default function RegisterPage() {
                 password: formData.password,
                 first_name: formData.first_name,
                 last_name: formData.last_name,
-                password_confirm: formData.password // Backend might expect this or not, aligning with previous logic
+                password_confirm: formData.password_confirm
             });
             toast.success('Account created successfully! Welcome to Lookedu.');
             router.push('/login');
@@ -133,6 +138,22 @@ export default function RegisterPage() {
                                             type="password"
                                             required
                                             value={formData.password}
+                                            onChange={handleChange}
+                                            className="w-full rounded-2xl border-2 border-gray-100 bg-gray-50 p-5 pl-14 font-bold text-gray-900 focus:border-purple-500 focus:bg-white dark:focus:bg-gray-950 focus:outline-none dark:bg-gray-800 dark:border-gray-800 dark:text-white dark:placeholder:text-gray-500 transition-all shadow-sm"
+                                            placeholder="••••••••"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="group space-y-2">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 pl-2">Confirm Security Key</label>
+                                    <div className="relative">
+                                        <Lock className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-purple-500 transition-colors" />
+                                        <input
+                                            name="password_confirm"
+                                            type="password"
+                                            required
+                                            value={formData.password_confirm}
                                             onChange={handleChange}
                                             className="w-full rounded-2xl border-2 border-gray-100 bg-gray-50 p-5 pl-14 font-bold text-gray-900 focus:border-purple-500 focus:bg-white dark:focus:bg-gray-950 focus:outline-none dark:bg-gray-800 dark:border-gray-800 dark:text-white dark:placeholder:text-gray-500 transition-all shadow-sm"
                                             placeholder="••••••••"

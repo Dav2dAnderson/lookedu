@@ -32,6 +32,8 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = ["api.codylife.uz", "ec2-16-16-115-194.eu-north-1.compute.amazonaws.com", "localhost", "127.0.0.1"]
 
 CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
     "https://frontend-nu-three-44.vercel.app",
     "https://codylife.uz",
     "https://www.codylife.uz",

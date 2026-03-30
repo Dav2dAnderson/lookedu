@@ -3,7 +3,8 @@ from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
-from django.core import settings
+from django.conf import settings
+
 
 from .models import CustomUser, ContactMessage
 
@@ -33,15 +34,18 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(
             username=validated_data['username'],
             password=validated_data['password'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
+            first_name=validated_data.get('first_name', ''),
+            last_name=validated_data.get('last_name', ''),
             phone_number=validated_data['phone_number'],
-            email=validated_data['email'],
+            email=validated_data.get('email', ''),
             role=role_user,
             have_right_to_add=False # Default to student
         )
 
-        send_mail("Welcome!", "Thanks for registering.", settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
+        try:
+            send_mail("Welcome!", "Thanks for registering.", settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
+        except Exception as e:
+            print(f"Registration email failed to send: {e}")
 
         return user
     
