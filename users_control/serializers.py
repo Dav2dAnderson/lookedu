@@ -42,14 +42,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             have_right_to_add=False # Default to student
         )
 
-        try:
-            connection = get_connection()
-            connection.open()
-            
-            send_mail("Welcome!", "Thanks for registering.", settings.EMAIL_HOST_USER, [user.email], connection=connection)
-            connection.close()
-        except Exception as e:
-            print(f"Registration email failed to send: {e}")
+        if user.email:
+            try:
+                send_mail("Welcome!", "Thanks for registering.", settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
+            except Exception as e:
+                print(f"Registration email failed to send: {e}")
 
         return user
     
