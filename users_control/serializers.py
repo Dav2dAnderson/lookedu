@@ -50,7 +50,7 @@ class UserLogOutSerializer(serializers.Serializer):
         try:
             RefreshToken(value)
         except TokenError:
-            return serializers.ValidationError("Invalid refresh token")
+            raise serializers.ValidationError("Invalid refresh token")
         return value
     
     def save(self, **kwargs):
