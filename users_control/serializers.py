@@ -2,7 +2,6 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
 from django.contrib.auth import get_user_model
-from django.core.mail import send_mail, get_connection
 from django.conf import settings
 
 
@@ -41,13 +40,6 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             role=role_user,
             have_right_to_add=False # Default to student
         )
-
-        if user.email:
-            try:
-                send_mail("Welcome!", "Thanks for registering.", settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
-            except Exception as e:
-                print(f"Registration email failed to send: {e}")
-
         return user
     
 
