@@ -80,90 +80,6 @@ export default function RegisterPage() {
 
                     <form onSubmit={handleSubmit} className="px-10 py-12 space-y-10">
                         <div className="grid gap-6 sm:grid-cols-2">
-                            <div className="space-y-6">
-                                <div className="group space-y-2">
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 pl-2">Username</label>
-                                    <div className="relative">
-                                        <User className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-purple-500 transition-colors" />
-                                        <input
-                                            name="username"
-                                            required
-                                            value={formData.username}
-                                            onChange={handleChange}
-                                            className="w-full rounded-2xl border-2 border-gray-100 bg-gray-50 p-5 pl-14 font-bold text-gray-900 focus:border-purple-500 focus:bg-white dark:focus:bg-gray-950 focus:outline-none dark:bg-gray-800 dark:border-gray-800 dark:text-white dark:placeholder:text-gray-500 transition-all shadow-sm"
-                                            placeholder="johndoe"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="group space-y-2">
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 pl-2">Phone Number</label>
-                                    <div className="relative">
-                                        <Phone className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-purple-500 transition-colors" />
-                                        <input
-                                            name="phone_number"
-                                            required
-                                            value={formData.phone_number}
-                                            onChange={handleChange}
-                                            className="w-full rounded-2xl border-2 border-gray-100 bg-gray-50 p-5 pl-14 font-bold text-gray-900 focus:border-purple-500 focus:bg-white dark:focus:bg-gray-950 focus:outline-none dark:bg-gray-800 dark:border-gray-800 dark:text-white dark:placeholder:text-gray-500 transition-all shadow-sm"
-                                            placeholder="+1 (555) 000-0000"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="space-y-6">
-                                <div className="group space-y-2">
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 pl-2">Email Address</label>
-                                    <div className="relative">
-                                        <Mail className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-purple-500 transition-colors" />
-                                        <input
-                                            name="email"
-                                            type="email"
-                                            required
-                                            value={formData.email}
-                                            onChange={handleChange}
-                                            className="w-full rounded-2xl border-2 border-gray-100 bg-gray-50 p-5 pl-14 font-bold text-gray-900 focus:border-purple-500 focus:bg-white dark:focus:bg-gray-950 focus:outline-none dark:bg-gray-800 dark:border-gray-800 dark:text-white dark:placeholder:text-gray-500 transition-all shadow-sm"
-                                            placeholder="hello@example.com"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="group space-y-2">
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 pl-2">Security Key</label>
-                                    <div className="relative">
-                                        <Lock className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-purple-500 transition-colors" />
-                                        <input
-                                            name="password"
-                                            type="password"
-                                            required
-                                            value={formData.password}
-                                            onChange={handleChange}
-                                            className="w-full rounded-2xl border-2 border-gray-100 bg-gray-50 p-5 pl-14 font-bold text-gray-900 focus:border-purple-500 focus:bg-white dark:focus:bg-gray-950 focus:outline-none dark:bg-gray-800 dark:border-gray-800 dark:text-white dark:placeholder:text-gray-500 transition-all shadow-sm"
-                                            placeholder="••••••••"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="group space-y-2">
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 pl-2">Confirm Security Key</label>
-                                    <div className="relative">
-                                        <Lock className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-purple-500 transition-colors" />
-                                        <input
-                                            name="password_confirm"
-                                            type="password"
-                                            required
-                                            value={formData.password_confirm}
-                                            onChange={handleChange}
-                                            className="w-full rounded-2xl border-2 border-gray-100 bg-gray-50 p-5 pl-14 font-bold text-gray-900 focus:border-purple-500 focus:bg-white dark:focus:bg-gray-950 focus:outline-none dark:bg-gray-800 dark:border-gray-800 dark:text-white dark:placeholder:text-gray-500 transition-all shadow-sm"
-                                            placeholder="••••••••"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="grid gap-6 sm:grid-cols-2 pt-4">
                             <div className="group space-y-2">
                                 <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 pl-2">First Name</label>
                                 <input
@@ -185,6 +101,86 @@ export default function RegisterPage() {
                                     className="w-full rounded-2xl border-2 border-gray-100 bg-gray-50 p-5 font-bold text-gray-900 focus:border-purple-500 focus:bg-white dark:focus:bg-gray-950 focus:outline-none dark:bg-gray-800 dark:border-gray-800 dark:text-white dark:placeholder:text-gray-500 transition-all shadow-sm"
                                     placeholder="Doe"
                                 />
+                            </div>
+                        </div>
+
+                        <div className="grid gap-6 sm:grid-cols-2">
+                            <div className="group space-y-2">
+                                <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 pl-2">Username</label>
+                                <div className="relative">
+                                    <User className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-purple-500 transition-colors" />
+                                    <input
+                                        name="username"
+                                        required
+                                        value={formData.username}
+                                        onChange={handleChange}
+                                        className="w-full rounded-2xl border-2 border-gray-100 bg-gray-50 p-5 pl-14 font-bold text-gray-900 focus:border-purple-500 focus:bg-white dark:focus:bg-gray-950 focus:outline-none dark:bg-gray-800 dark:border-gray-800 dark:text-white dark:placeholder:text-gray-500 transition-all shadow-sm"
+                                        placeholder="johndoe"
+                                    />
+                                </div>
+                            </div>
+                            <div className="group space-y-2">
+                                <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 pl-2">Phone Number</label>
+                                <div className="relative">
+                                    <Phone className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-purple-500 transition-colors" />
+                                    <input
+                                        name="phone_number"
+                                        required
+                                        value={formData.phone_number}
+                                        onChange={handleChange}
+                                        className="w-full rounded-2xl border-2 border-gray-100 bg-gray-50 p-5 pl-14 font-bold text-gray-900 focus:border-purple-500 focus:bg-white dark:focus:bg-gray-950 focus:outline-none dark:bg-gray-800 dark:border-gray-800 dark:text-white dark:placeholder:text-gray-500 transition-all shadow-sm"
+                                        placeholder="+1 (555) 000-0000"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="group space-y-2">
+                            <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 pl-2">Email Address</label>
+                            <div className="relative">
+                                <Mail className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-purple-500 transition-colors" />
+                                <input
+                                    name="email"
+                                    type="email"
+                                    required
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    className="w-full rounded-2xl border-2 border-gray-100 bg-gray-50 p-5 pl-14 font-bold text-gray-900 focus:border-purple-500 focus:bg-white dark:focus:bg-gray-950 focus:outline-none dark:bg-gray-800 dark:border-gray-800 dark:text-white dark:placeholder:text-gray-500 transition-all shadow-sm"
+                                    placeholder="hello@example.com"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="grid gap-6 sm:grid-cols-2">
+                            <div className="group space-y-2">
+                                <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 pl-2">Security Key</label>
+                                <div className="relative">
+                                    <Lock className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-purple-500 transition-colors" />
+                                    <input
+                                        name="password"
+                                        type="password"
+                                        required
+                                        value={formData.password}
+                                        onChange={handleChange}
+                                        className="w-full rounded-2xl border-2 border-gray-100 bg-gray-50 p-5 pl-14 font-bold text-gray-900 focus:border-purple-500 focus:bg-white dark:focus:bg-gray-950 focus:outline-none dark:bg-gray-800 dark:border-gray-800 dark:text-white dark:placeholder:text-gray-500 transition-all shadow-sm"
+                                        placeholder="••••••••"
+                                    />
+                                </div>
+                            </div>
+                            <div className="group space-y-2">
+                                <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 pl-2">Confirm Security Key</label>
+                                <div className="relative">
+                                    <Lock className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-purple-500 transition-colors" />
+                                    <input
+                                        name="password_confirm"
+                                        type="password"
+                                        required
+                                        value={formData.password_confirm}
+                                        onChange={handleChange}
+                                        className="w-full rounded-2xl border-2 border-gray-100 bg-gray-50 p-5 pl-14 font-bold text-gray-900 focus:border-purple-500 focus:bg-white dark:focus:bg-gray-950 focus:outline-none dark:bg-gray-800 dark:border-gray-800 dark:text-white dark:placeholder:text-gray-500 transition-all shadow-sm"
+                                        placeholder="••••••••"
+                                    />
+                                </div>
                             </div>
                         </div>
 
