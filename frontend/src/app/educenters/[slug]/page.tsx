@@ -157,6 +157,18 @@ export default function EduceterDetailPage() {
                                             </div>
                                         </motion.div>
                                     )}
+
+                                    {center.official_website && (
+                                        <motion.div whileHover={{ y: -5 }} className="flex items-center space-x-4 rounded-2xl bg-gray-50 dark:bg-gray-800/50 p-6 border border-gray-100 dark:border-gray-800 w-full">
+                                            <div className="p-3 bg-white dark:bg-gray-900 rounded-xl shadow-sm">
+                                                <ExternalLink className="h-6 w-6 text-blue-500" />
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <p className="text-[10px] font-black uppercase tracking-widest text-blue-400">Official Website</p>
+                                                <a href={center.official_website} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 font-bold text-lg sm:text-xl truncate sm:overflow-visible sm:whitespace-normal hover:underline">{center.official_website.replace(/^https?:\/\//, '')}</a>
+                                            </div>
+                                        </motion.div>
+                                    )}
                                 </div>
                             </section>
 
