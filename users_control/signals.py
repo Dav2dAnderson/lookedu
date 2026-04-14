@@ -24,3 +24,13 @@ def send_welcome_email(sender, instance, created, **kwargs):
 
         except Exception as e:
             print(f"Registration email failed to send: {e}")
+
+
+# @reciever(post_save, sender=Educenters)
+# def send_news_notify(sender, instance, created, **kwargs):
+#     if created and instance.email:
+#         try:
+#             connection = get_connection('django.core.mail.backends.smtp.EmailBackend')
+#         except Exception as e:
+#             print(f"News notify email failed to send: {e}")
+            
