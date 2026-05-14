@@ -48,7 +48,7 @@ class ApplicationsView(viewsets.ModelViewSet):
 class CoursesView(viewsets.ModelViewSet):
     queryset = Courses.objects.all()
     serializer_class = CoursesSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, HaveARightToAdd]
     lookup_field = 'slug'
 
 

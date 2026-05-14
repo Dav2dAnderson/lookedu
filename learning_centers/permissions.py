@@ -8,7 +8,7 @@ class IsOwnerOrAdmin(BasePermission):
         if request.method in SAFE_METHODS:
             return True
         
-        elif request.method in ['PUT', ]:
+        elif request.method in ['PUT', 'PATCH']:
             return user.is_staff
         
         return obj.owner_id == user.id
