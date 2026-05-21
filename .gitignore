@@ -34,8 +34,6 @@ staticfiles/
 # Django migrations (ixtiyoriy)
 ####################################
 # Agar migrationlarni gitga qo‘shmoqchi bo‘lsangiz, o‘chiring
-**/migrations/*.py
-!**/migrations/__init__.py
 
 ####################################
 # Environment variables
